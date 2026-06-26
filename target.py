@@ -57,6 +57,28 @@ def admin():
 def backup():
     return "<pre>database_backup_2026.sql (2.3 MB)</pre>"
 
+@app.route("/config")
+def config():
+    return "<pre>DB_HOST=localhost\nDB_USER=root\nDB_PASS=admin123</pre>", 403
+
+@app.route("/login")
+def login():
+    return "<h2>Login</h2><form><input name='user'><input name='pass' type='password'></form>"
+
+@app.route("/api")
+def api():
+    return '{"status":"ok","version":"1.0.0","endpoints":["/users","/admin"]}'
+
+@app.route("/robots.txt")
+def robots():
+    resp = app.make_response("User-agent: *\nDisallow: /admin\nDisallow: /backup\nDisallow: /config")
+    resp.headers["Content-Type"] = "text/plain"
+    return resp
+
+@app.route("/.git/config")
+def git_config():
+    return "[core]\n\trepositoryformatversion = 0\n\tfilemode = false", 200
+
 if __name__ == "__main__":
     print("LightScanner 测试靶场已启动: http://127.0.0.1:5000")
     app.run(host="127.0.0.1", port=5000, debug=False)
