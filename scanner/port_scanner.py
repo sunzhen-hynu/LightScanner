@@ -27,6 +27,7 @@ LightScanner - 端口扫描模块
 """
 
 import socket
+import sys
 import time
 
 try:
